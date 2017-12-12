@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JuegoDianas.iml" filepath="$PROJECT_DIR$/JuegoDianas.iml" />
+      <module fileurl="file://C:\Users\NFM_9\Desktop\Nachin\UNI\SEV\JuegoDianas\JuegoDianas.iml" filepath="C:\Users\NFM_9\Desktop\Nachin\UNI\SEV\JuegoDianas\JuegoDianas.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\NFM_9\Desktop\Nachin\UNI\SEV\JuegoDianas\app\app.iml" filepath="C:\Users\NFM_9\Desktop\Nachin\UNI\SEV\JuegoDianas\app\app.iml" />
     </modules>
   </component>
 </project>
