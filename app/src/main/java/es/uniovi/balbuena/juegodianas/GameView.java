@@ -20,7 +20,7 @@ public class GameView extends View {
     Context context;
     GameLoop gameloop;
 
-    //objetos, personajes
+    //objetos, personajes y demas
 
     private Fondo fondo;
 
