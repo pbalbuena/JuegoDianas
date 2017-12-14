@@ -57,6 +57,21 @@ public class Sprite {
         tiempoUltimaActualizacion = 0l;
     }
 
+    public Sprite(Bitmap bitmap, int modeloAncho, int modeloAltura, int fps, int framesTotales, boolean bucle, int numFIlas) {
+        this.bitmap = bitmap;
+        this.modeloAncho = modeloAncho;
+        this.modeloAltura = modeloAltura;
+        this.framesTotales = framesTotales;
+        this.bucle = bucle;
+
+        frameActual = 0;
+        spriteAncho = bitmap.getWidth() / framesTotales;
+        spriteAltura = bitmap.getHeight()/numFIlas;
+        rectanguloDibujo = new Rect(0, 0, spriteAncho, spriteAltura);
+        interavaloEntreFrames = 1000 / fps;
+        tiempoUltimaActualizacion = 0l;
+    }
+
     public boolean actualizar (long tiempo) {
         boolean finSprite = false;
 

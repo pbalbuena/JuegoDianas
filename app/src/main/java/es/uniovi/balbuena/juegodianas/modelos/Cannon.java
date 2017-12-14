@@ -26,28 +26,28 @@ public class Cannon extends Modelo {
 
     public Cannon(Context context, double x, double y) {
         super(context, x, y);
-        altura = Ar.altura(75);
-        ancho = Ar.ancho(75);
+        altura = Ar.altura(150);
+        ancho = Ar.ancho(100);
 
         Sprite basico = new Sprite(BitmapFactory.decodeResource(
                 context.getResources(), R.drawable.sprite_cannon_basico),
                 ancho, altura,
-                4, 12, true);
+                4, 8, true, 2);
         sprites.put(BASICO, basico);
 
         Sprite disparar = new Sprite(BitmapFactory.decodeResource(
                 context.getResources(), R.drawable.sprite_cannon_disparar),
                 ancho, altura,
-                4, 12, false);
+                12, 8, false, 2);
         sprites.put(DISPARAR, disparar);
 
         sprite = basico;
     }
 
-    public DisparoCannon disparar(){
+    public DisparoCannon disparar(double pendiente, int acelx){
         if (disparando) {
             disparando = false;
-            return new DisparoCannon(context, x, y);
+            return new DisparoCannon(context, x, y, pendiente, acelx );
         }
         return null;
     }
@@ -55,6 +55,12 @@ public class Cannon extends Modelo {
     @Override
     public void dibujarEnPantalla(Canvas canvas) {
         sprite.dibujarSprite(canvas, (int) x, (int) y);
+    }
+
+    public void moverAutomaticamente() {
+
+        boolean finalizaSprite = sprite.actualizar(System.currentTimeMillis());
+
     }
 
     public boolean isDisparando() {

@@ -43,7 +43,7 @@ public class DianaFacil extends Diana {
 
         sprite = explotar;
 
-        aceleracionX = 5;
+        aceleracionX = 10;
     }
 
     @Override

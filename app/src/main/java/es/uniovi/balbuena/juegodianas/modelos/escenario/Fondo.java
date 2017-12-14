@@ -3,6 +3,7 @@ package es.uniovi.balbuena.juegodianas.modelos.escenario;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import es.uniovi.balbuena.juegodianas.R;
 import es.uniovi.balbuena.juegodianas.modelos.Modelo;
@@ -57,4 +58,6 @@ public class Fondo extends Modelo {
 
         }
     }
+
+
 }
