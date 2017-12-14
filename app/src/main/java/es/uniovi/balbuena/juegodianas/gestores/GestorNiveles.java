@@ -85,7 +85,7 @@ public class GestorNiveles {
 
         LinkedList<Diana> enemigos = new LinkedList<Diana>();
 
-        NodeList nodosEnemigoNave = doc.getElementsByTagName("enemyN");
+        NodeList nodosEnemigoNave = doc.getElementsByTagName("dianaF");
         for (int i = 0; i < nodosEnemigoNave.getLength(); i++) {
             Element elementoActual = (Element) nodosEnemigoNave.item(i);
             String x = parser.getValor(elementoActual, "x");
