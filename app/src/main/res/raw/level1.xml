@@ -1,38 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <level id="1">
     <enemies>
-        <enemyN>
+        <dianaF>
             <x>100</x>
-            <y>-150</y>
-        </enemyN>
-        <enemyN>
-            <x>140</x>
-            <y>-200</y>
-        </enemyN>
-        <enemyH>
-            <x>120</x>
-            <y>-170</y>
-        </enemyH>
-        <moneda>
-            <x>150</x>
-            <y>-600</y>
-        </moneda>
-        <moneda>
-            <x>300</x>
-            <y>-1000</y>
-        </moneda>
-        <powerUp1>
-            <x>100</x>
-            <y>-100</y>
-        </powerUp1>
-        <powerUp1>
-            <x>100</x>
-            <y>-1500</y>
-        </powerUp1>
-        <powerUp2>
+            <y>75</y>
+        </dianaF>
+        <dianaF>
             <x>200</x>
-            <y>-150</y>
-        </powerUp2>
+            <y>150</y>
+        </dianaF>
+        <dianaF>
+            <x>-100</x>
+            <y>225</y>
+        </dianaF>
     </enemies>
 </level>
 
