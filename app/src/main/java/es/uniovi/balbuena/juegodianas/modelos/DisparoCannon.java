@@ -13,28 +13,32 @@ public class DisparoCannon extends Modelo {
     public int aceleracionY = -6;
     public int aceleracionX;
     private double pendienteRecta;
+    private double n;
 
 
-    private boolean haciaDerecha;
-
-
-    public DisparoCannon (Context context, double x, double y, double pendiente, int acelx) {
+    public DisparoCannon (Context context, double x, double y, double pendiente,  double n, int acelx) {
         super(context, x, y);
         altura = Ar.altura(20);
         ancho = Ar.ancho(20);
 
         aceleracionX = acelx;
         pendienteRecta = pendiente;
+        this.n = n;
         imagen = context.getResources().getDrawable(R.drawable.disparo_cannon);
     }
 
     public void moverAutomaticamente() {
         //y= mx x = y/m
-
-        double newY = y + aceleracionY;
+        //double newY = y + aceleracionY;
+        if (x >= mCanvasAncho ){
+            rebotarDerecha();
+        }
+        if ( x <= 0){
+            rebotarIzquierda();
+        }
         double newX = x + aceleracionX;
-        y = pendienteRecta*newX;
-        x = newY/pendienteRecta;
+        y = pendienteRecta*newX + n;
+        x = newX;
     }
 
     public void moverRapido(){
@@ -50,6 +54,25 @@ public class DisparoCannon extends Modelo {
             return 1;
         }
         return -1;
+    }
+
+    private void rebotarIzquierda() {        //invertir la pendiente
+        double newX = 0;
+        double newY = (pendienteRecta * newX) + n;
+        this.pendienteRecta = pendienteRecta *(-1);
+        //y = mCanvasAltura;
+        this.n = newY - (pendienteRecta*newX);
+        this.aceleracionX = aceleracionX * -1;
+
+    }
+
+    private void rebotarDerecha() {
+        double newX = mCanvasAncho;
+        double newY = (pendienteRecta * newX) + n;
+        this.pendienteRecta = pendienteRecta *(-1);
+        //y = mCanvasAltura;
+        this.n = newY - (pendienteRecta*newX);
+        this.aceleracionX = aceleracionX * -1;
     }
 
 

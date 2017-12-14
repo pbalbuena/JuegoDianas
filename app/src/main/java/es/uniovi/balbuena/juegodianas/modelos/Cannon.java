@@ -44,10 +44,10 @@ public class Cannon extends Modelo {
         sprite = basico;
     }
 
-    public DisparoCannon disparar(double pendiente, int acelx){
+    public DisparoCannon disparar(double pendiente, double n,  int acelx){
         if (disparando) {
             disparando = false;
-            return new DisparoCannon(context, x, y, pendiente, acelx );
+            return new DisparoCannon(context, x, y, pendiente, n, acelx );
         }
         return null;
     }

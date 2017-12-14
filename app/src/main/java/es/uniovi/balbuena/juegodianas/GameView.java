@@ -53,14 +53,12 @@ public class GameView extends View {
     private void inicializar(Context context) {
 
         fondo = new Fondo (context, Ar.x(320/2), Ar.y(480/2));
-        cannon = new Cannon(context,  Ar.x(320/2), Ar.y(350));
+        cannon = new Cannon(context,  Ar.x(320/2), Ar.y(390));
         Diana d = new DianaFacil(context, 75, 75);
 
         disparoCannons = new LinkedList<DisparoCannon>();
         dianas = new LinkedList<Diana>();
         dianas.add(d);
-
-
 
         // Bucle del Juego.
         gameloop = new GameLoop();
@@ -175,9 +173,10 @@ public class GameView extends View {
                                 aceleracionx = 0;
                             }
                             double y2 = y[i];
-                            Log.i("coord x y", x.toString() + " " + y.toString());
-                            double pendiente = (y2 - y1) / (x2 - x1);
-                            disparoCannons.add(cannon.disparar(pendiente, aceleracionx));
+                            //Log.i("coord x y", x.toString() + " " + y.toString());
+                            double pendiente = (y1 - y2) / (x1 - x2);
+                            double n = y1- (pendiente*x1);
+                            disparoCannons.add(cannon.disparar(pendiente, n,  aceleracionx));
                         }
                     }
 
