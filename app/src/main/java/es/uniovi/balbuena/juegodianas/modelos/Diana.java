@@ -11,6 +11,7 @@ import es.uniovi.balbuena.juegodianas.global.Estados;
 
 public abstract class Diana extends Modelo {
 
+    private int puntuacion;
 
     public float aceleracionX;
     public float aceleracionY;

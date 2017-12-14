@@ -1,6 +1,7 @@
 package es.uniovi.balbuena.juegodianas.modelos;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
@@ -17,6 +18,8 @@ import es.uniovi.balbuena.juegodianas.modelos.utilidades.Ar;
 
 public class DianaFacil extends Diana {
 
+
+    public static final String BASICO = "basico";
     public static final String EXPLOTAR = "Explotar";
 
     private Sprite sprite;
@@ -28,24 +31,47 @@ public class DianaFacil extends Diana {
         altura = Ar.altura(75);
         ancho = Ar.ancho(75);
 
+        imagen = context.getResources().getDrawable(R.drawable.diana1);
+
+        Sprite basico = new Sprite(BitmapFactory.decodeResource(
+                context.getResources(), R.drawable.diana1), ancho, altura, 1, 1, false);
+        sprites.put(BASICO, basico);
+
         Sprite explotar = new Sprite(BitmapFactory.decodeResource(
                 context.getResources(), R.drawable.animacion_enemigo_explotar), ancho, altura, 6, 6, false);
         sprites.put(EXPLOTAR, explotar);
 
+        sprite = explotar;
 
         aceleracionX = 5;
     }
 
     @Override
     public void dibujarEnPantalla(Canvas canvas) {
+        int yArriba = (int)  y - altura / 2;
+        int xIzquierda = (int) x - ancho / 2;
 
+        imagen.setBounds(xIzquierda, yArriba, xIzquierda
+                + ancho, yArriba + altura);
+        imagen.draw(canvas);
     }
 
     @Override
     public void moverAutomaticamente() {
-        if(estado == Estados.ACTIVO){
+
+        boolean finalizaSprite = sprite.actualizar(System.currentTimeMillis());
+
+        if (sprite == sprites.get(EXPLOTAR) && finalizaSprite) {
+            estado = Estados.INACTIVO;
+        }
+
+        if (x + ancho / 2 >= mCanvasAncho ){
             aceleracionX = (float) (0.5 + Math.random()*2.5 * -1);
         }
+        if ( x - ancho / 2 <= 0){
+            aceleracionX = (float) (0.5 + Math.random()*2.5);
+        }
+
         x = x + aceleracionX;
     }
 
@@ -62,6 +88,11 @@ public class DianaFacil extends Diana {
 
     @Override
     public int estaEnPantalla() {
-        return 0;
+        if ( y + altura/2 < 0){
+            return 0;
+        } if ( y + altura/2 >= 0 && y - altura/2 < mCanvasAltura){
+            return 1;
+        }
+        return -1;
     }
 }

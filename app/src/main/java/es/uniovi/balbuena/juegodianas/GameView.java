@@ -5,8 +5,12 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import es.uniovi.balbuena.juegodianas.modelos.Diana;
+import es.uniovi.balbuena.juegodianas.modelos.DianaFacil;
 import es.uniovi.balbuena.juegodianas.modelos.escenario.Fondo;
 import es.uniovi.balbuena.juegodianas.modelos.utilidades.Ar;
 
@@ -20,9 +24,11 @@ public class GameView extends View {
     Context context;
     GameLoop gameloop;
 
+
     //objetos, personajes y demas
 
     private Fondo fondo;
+    private List<Diana> dianas;
 
     public GameView(Context context) {
         super(context);
@@ -34,6 +40,12 @@ public class GameView extends View {
     private void inicializar(Context context) {
 
         fondo = new Fondo (context, Ar.x(320/2), Ar.y(480/2));
+        Diana d = new DianaFacil(context, 75, 75);
+
+        dianas = new LinkedList<Diana>();
+        dianas.add(d);
+
+
 
         // Bucle del Juego.
         gameloop = new GameLoop();
@@ -45,6 +57,12 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         try {
             fondo.dibujarEnPantalla(canvas);
+
+            for (Diana diana : dianas
+                 ) {
+                diana.dibujarEnPantalla(canvas);
+            }
+
         }catch (Exception e){
 
         }
@@ -59,7 +77,13 @@ public class GameView extends View {
     }
 
     private void gl_moverElementos(){
+
         fondo.mover();
+
+        for (Diana d : dianas
+             ) {
+            d.moverAutomaticamente();
+        }
     }
 
     private void gl_comprobarDisparos(){
