@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import es.uniovi.balbuena.juegodianas.modelos.Cannon;
 import es.uniovi.balbuena.juegodianas.modelos.Diana;
 import es.uniovi.balbuena.juegodianas.modelos.DianaFacil;
 import es.uniovi.balbuena.juegodianas.modelos.escenario.Fondo;
@@ -28,6 +29,7 @@ public class GameView extends View {
     //objetos, personajes y demas
 
     private Fondo fondo;
+    private Cannon cannon;
     private List<Diana> dianas;
 
     public GameView(Context context) {
@@ -40,6 +42,7 @@ public class GameView extends View {
     private void inicializar(Context context) {
 
         fondo = new Fondo (context, Ar.x(320/2), Ar.y(480/2));
+        cannon = new Cannon(context,  Ar.x(320/2), Ar.y(300));
         Diana d = new DianaFacil(context, 75, 75);
 
         dianas = new LinkedList<Diana>();
@@ -57,7 +60,7 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         try {
             fondo.dibujarEnPantalla(canvas);
-
+            cannon.dibujarEnPantalla(canvas);
             for (Diana diana : dianas
                  ) {
                 diana.dibujarEnPantalla(canvas);
