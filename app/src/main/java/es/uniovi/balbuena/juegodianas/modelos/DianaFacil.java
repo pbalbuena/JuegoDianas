@@ -46,17 +46,19 @@ public class DianaFacil extends Diana {
 
         sprite = explotar;
 
-        aceleracionX = 10;
+        aceleracionX = 3;
     }
 
     @Override
     public void dibujarEnPantalla(Canvas canvas) {
-        int yArriba = (int)  y - altura / 2;
-        int xIzquierda = (int) x - ancho / 2;
+        if(estado != Estados.INACTIVO) {
+            int yArriba = (int) y - altura / 2;
+            int xIzquierda = (int) x - ancho / 2;
 
-        imagen.setBounds(xIzquierda, yArriba, xIzquierda
-                + ancho, yArriba + altura);
-        imagen.draw(canvas);
+            imagen.setBounds(xIzquierda, yArriba, xIzquierda
+                    + ancho, yArriba + altura);
+            imagen.draw(canvas);
+        }
     }
 
     @Override
@@ -86,7 +88,16 @@ public class DianaFacil extends Diana {
 
     @Override
     public boolean colisiona(Modelo modelo) {
-        return false;
+
+        boolean colisiona = false;
+
+        if (modelo.getX() - modelo.getAncho() / 2 <= (x + ancho / 2)
+                && (modelo.getX() + modelo.getAncho() / 2) >= (x - ancho / 2)
+                && (y + altura / 2) >= (modelo.getY() - modelo.getAltura() / 2)
+                && (y - altura / 2) < (modelo.getY() + modelo.getAltura() / 2)) {
+            colisiona = true;
+        }
+        return colisiona;
     }
 
     @Override

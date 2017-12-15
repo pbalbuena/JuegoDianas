@@ -46,6 +46,7 @@ public class GameView extends View {
     private Marcador marcador;
     private List<Diana> dianas;
     private List<DisparoCannon> disparoCannons;
+    private boolean finJuego;
 
     public GameView(Context context) {
         super(context);
@@ -58,8 +59,8 @@ public class GameView extends View {
 
         fondo = new Fondo (context, Ar.x(320/2), Ar.y(480/2));
         cannon = new Cannon(context,  Ar.x(320/2), Ar.y(390));
-        Diana d = new DianaFacil(context, 75, 75);
-        marcador = new Marcador(context, Ar.x(320/2 +30), Ar.y(390));
+        Diana d = new DianaFacil(context, Ar.x(50), Ar.y(50));
+        marcador = new Marcador(context, Ar.x(250), Ar.y(410));
 
         disparoCannons = new LinkedList<DisparoCannon>();
         dianas = new LinkedList<Diana>();
@@ -93,12 +94,14 @@ public class GameView extends View {
 
     private void gl_comprobarColisiones(){
         Diana dianaSacarLista = null;
-        DisparoCannon disparoCannon = null;
+        DisparoCannon disparoSacarLista = null;
         PowerUp powerUpSacarLista = null;
 
         for (Diana d: dianas
              ) {
             if (d.estaEnPantalla() == -1 || d.estado == Estados.INACTIVO) {
+                Log.i("esta en pantalla?", " " + d.estaEnPantalla());
+                Log.i("esta en activo?", " " + d.estado);
                 dianaSacarLista  = d;
             }
 
@@ -110,17 +113,30 @@ public class GameView extends View {
                     d.destruir();
                     marcador.setPuntos(marcador.getPuntos() + d.getPuntuacion());
 
-                    disparoCannon = disparoCannon1;
+                    disparoSacarLista = disparoCannon1;
                 }
                 if (disparoCannon1.estaEnPantalla() != 1) {
-                    disparoCannon = disparoCannon1;
+                    disparoSacarLista = disparoCannon1;
                 }
             }
         }
+
+        //sacar de las listas
+        if(dianaSacarLista != null){
+            dianas.remove(dianaSacarLista);
+        }
+        if(disparoSacarLista != null){
+            disparoCannons.remove(disparoSacarLista);
+        }
+
+
     }
 
     private void gl_comprobarNivelFinalizado(){
-
+        if(dianas.size() == 0){
+            finJuego = true;
+            ((MainActivity) context).finish();
+        }
     }
 
     private void gl_moverElementos(){
@@ -131,11 +147,12 @@ public class GameView extends View {
         for (Diana d : dianas
              ) {
             d.moverAutomaticamente();
+            Log.i("coord disparo x y", d.getX() + " " + d.getY());
         }
         for (DisparoCannon disparos : disparoCannons
                 ) {
             disparos.moverAutomaticamente();
-            Log.i("coord disparo x y", disparos.getX() + " " + disparos.getY());
+
         }
     }
 
