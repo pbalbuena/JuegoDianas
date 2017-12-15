@@ -5,14 +5,14 @@
             <x>100</x>
             <y>75</y>
         </dianaF>
-        <dianaF>
-            <x>200</x>
-            <y>150</y>
-        </dianaF>
-        <dianaF>
+        <dianaE>
             <x>-100</x>
+            <y>150</y>
+        </dianaE>
+        <dianaJ>
+            <x>140</x>
             <y>225</y>
-        </dianaF>
+        </dianaJ>
     </enemies>
 </level>
 

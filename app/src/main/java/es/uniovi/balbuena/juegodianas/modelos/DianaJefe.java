@@ -1,7 +1,6 @@
 package es.uniovi.balbuena.juegodianas.modelos;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
@@ -13,11 +12,10 @@ import es.uniovi.balbuena.juegodianas.graficos.Sprite;
 import es.uniovi.balbuena.juegodianas.modelos.utilidades.Ar;
 
 /**
- * Created by Balbuena on 08/12/2017.
+ * Created by Balbuena on 15/12/2017.
  */
 
-public class DianaFacil extends Diana {
-
+public class DianaJefe extends Diana {
 
     public static final String BASICO = "basico";
     public static final String EXPLOTAR = "Explotar";
@@ -26,18 +24,18 @@ public class DianaFacil extends Diana {
     private HashMap<String,Sprite> sprites = new HashMap<String,Sprite> ();
 
 
-    public DianaFacil(Context context, double x, double y) {
+    public DianaJefe(Context context, double x, double y) {
         super(context, x, y);
         altura = Ar.altura(40);
         ancho = Ar.ancho(40);
 
         //puntuacion
-        setPuntuacion(1);
+        setPuntuacion(10);
 
-        imagen = context.getResources().getDrawable(R.drawable.diana1);
+        imagen = context.getResources().getDrawable(R.drawable.diana3);
 
         Sprite basico = new Sprite(BitmapFactory.decodeResource(
-                context.getResources(), R.drawable.diana1), ancho, altura, 1, 1, false);
+                context.getResources(), R.drawable.diana3), ancho, altura, 1, 1, false);
         sprites.put(BASICO, basico);
 
         Sprite explotar = new Sprite(BitmapFactory.decodeResource(
@@ -46,7 +44,7 @@ public class DianaFacil extends Diana {
 
         sprite = basico;
 
-        aceleracionX = 3;
+        aceleracionX = 10;
     }
 
     @Override
@@ -73,10 +71,10 @@ public class DianaFacil extends Diana {
         }
 
         if (x + ancho / 2 >= mCanvasAncho ){
-            aceleracionX = (float) (3 * -1);
+            aceleracionX = (float) (10 * -1);
         }
         if ( x - ancho / 2 <= 0){
-            aceleracionX = (float) (3);
+            aceleracionX = (float) (0.5 + Math.random()*10);
         }
 
         x = x + aceleracionX;

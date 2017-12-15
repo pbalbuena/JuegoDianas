@@ -1,6 +1,7 @@
 package es.uniovi.balbuena.juegodianas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import es.uniovi.balbuena.juegodianas.gestores.GestorNiveles;
 import es.uniovi.balbuena.juegodianas.global.Estados;
 import es.uniovi.balbuena.juegodianas.modelos.Cannon;
 import es.uniovi.balbuena.juegodianas.modelos.Diana;
@@ -22,6 +24,8 @@ import es.uniovi.balbuena.juegodianas.modelos.PowerUp;
 import es.uniovi.balbuena.juegodianas.modelos.controles.Marcador;
 import es.uniovi.balbuena.juegodianas.modelos.escenario.Fondo;
 import es.uniovi.balbuena.juegodianas.modelos.utilidades.Ar;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by Balbuena on 08/12/2017.
@@ -69,7 +73,6 @@ public class GameView extends View {
 
         fondo = new Fondo (context, Ar.x(320/2), Ar.y(480/2));
         cannon = new Cannon(context,  Ar.x(320/2), Ar.y(390));
-        Diana d = new DianaFacil(context, Ar.x(50), Ar.y(50));
         marcador = new Marcador(context, Ar.x(30), Ar.y(30));
         ObstaculoFacil obstaculoFacil = new ObstaculoFacil(context, Ar.x(50), Ar.y(250));
         ObstaculoIrrompible obstaculoIrrompible = new ObstaculoIrrompible(context, Ar.x(250), Ar.y(150));
@@ -77,8 +80,7 @@ public class GameView extends View {
 
         disparoCannons = new LinkedList<DisparoCannon>();
 
-        dianas = new LinkedList<Diana>();
-        dianas.add(d);
+        dianas = GestorNiveles.getInstancia().getDianasNivelActual(context);
 
         obstaculos = new LinkedList<Obstaculo>();
         obstaculos.add(obstaculoFacil);
@@ -124,9 +126,10 @@ public class GameView extends View {
 
         for (Diana d: dianas
              ) {
-            if (d.estaEnPantalla() == -1 || d.estado == Estados.INACTIVO) {
+            if (/*d.estaEnPantalla() == -1 ||*/ d.estado == Estados.INACTIVO) {
                 Log.i("esta en pantalla?", " " + d.estaEnPantalla());
                 Log.i("esta en activo?", " " + d.estado);
+                Log.i("diana ", d.toString() + " destruida");
                 dianaSacarLista  = d;
             }
 
@@ -192,7 +195,9 @@ public class GameView extends View {
     private void gl_comprobarNivelFinalizado(){
         if(dianas.size() == 0){
             finJuego = true;
-            ((MainActivity) context).finish();
+            ((MainActivity) context).finish();/*
+            Intent actividadJuego = new Intent(MenuActivity.class, MainActivity.class);
+            startActivity(actividadJuego);*/
         }
     }
 
@@ -204,7 +209,7 @@ public class GameView extends View {
         for (Diana d : dianas
              ) {
             d.moverAutomaticamente();
-            Log.i("coord disparo x y", d.getX() + " " + d.getY());
+           //Log.i("coord disparo x y", d.getX() + " " + d.getY());
         }
         for (DisparoCannon disparos : disparoCannons
                 ) {
@@ -299,7 +304,7 @@ public class GameView extends View {
 
                       gl_moverElementos();
                       gl_comprobarColisiones();
-
+                    gl_comprobarNivelFinalizado();
 
                     // Re-dibujar onDraw(Canvas canvas)
                     postInvalidate();

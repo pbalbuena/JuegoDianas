@@ -1,7 +1,6 @@
 package es.uniovi.balbuena.juegodianas.modelos;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
@@ -13,12 +12,10 @@ import es.uniovi.balbuena.juegodianas.graficos.Sprite;
 import es.uniovi.balbuena.juegodianas.modelos.utilidades.Ar;
 
 /**
- * Created by Balbuena on 08/12/2017.
+ * Created by Balbuena on 15/12/2017.
  */
 
-public class DianaFacil extends Diana {
-
-
+public class DianaEfimera extends Diana {
     public static final String BASICO = "basico";
     public static final String EXPLOTAR = "Explotar";
 
@@ -26,18 +23,18 @@ public class DianaFacil extends Diana {
     private HashMap<String,Sprite> sprites = new HashMap<String,Sprite> ();
 
 
-    public DianaFacil(Context context, double x, double y) {
+    public DianaEfimera(Context context, double x, double y) {
         super(context, x, y);
         altura = Ar.altura(40);
         ancho = Ar.ancho(40);
 
         //puntuacion
-        setPuntuacion(1);
+        setPuntuacion(5);
 
-        imagen = context.getResources().getDrawable(R.drawable.diana1);
+        imagen = context.getResources().getDrawable(R.drawable.diana2);
 
         Sprite basico = new Sprite(BitmapFactory.decodeResource(
-                context.getResources(), R.drawable.diana1), ancho, altura, 1, 1, false);
+                context.getResources(), R.drawable.diana2), ancho, altura, 1, 1, false);
         sprites.put(BASICO, basico);
 
         Sprite explotar = new Sprite(BitmapFactory.decodeResource(
@@ -46,7 +43,7 @@ public class DianaFacil extends Diana {
 
         sprite = basico;
 
-        aceleracionX = 3;
+        aceleracionX = 6;
     }
 
     @Override
@@ -72,11 +69,12 @@ public class DianaFacil extends Diana {
             estado = Estados.INACTIVO;
         }
 
-        if (x + ancho / 2 >= mCanvasAncho ){
-            aceleracionX = (float) (3 * -1);
+        //si sale por la derecha, desaparece
+        if (x - ancho / 2 >= mCanvasAncho && aceleracionX >0){
+            estado = Estados.INACTIVO;
         }
-        if ( x - ancho / 2 <= 0){
-            aceleracionX = (float) (3);
+        if ( x + ancho / 2 <= 0 && aceleracionX < 0){
+            estado = Estados.INACTIVO;
         }
 
         x = x + aceleracionX;
