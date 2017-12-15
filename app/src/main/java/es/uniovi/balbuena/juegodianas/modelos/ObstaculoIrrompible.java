@@ -8,15 +8,15 @@ import es.uniovi.balbuena.juegodianas.global.Estados;
 import es.uniovi.balbuena.juegodianas.modelos.utilidades.Ar;
 
 /**
- * Created by Balbuena on 08/12/2017.
+ * Created by Balbuena on 15/12/2017.
  */
 
-public class ObstaculoFacil extends Obstaculo {
-    public ObstaculoFacil(Context context, double x, double y) {
+public class ObstaculoIrrompible extends Obstaculo {
+    public ObstaculoIrrompible(Context context, double x, double y) {
         super(context, x, y);
         altura = Ar.altura(20);
         ancho = Ar.ancho(100);
-        imagen = context.getResources().getDrawable(R.drawable.ladrillo);
+        imagen = context.getResources().getDrawable(R.drawable.ladrillo1);
     }
 
     @Override
@@ -38,8 +38,11 @@ public class ObstaculoFacil extends Obstaculo {
 
     @Override
     public void destruir() {
+
+    }
+
+    public void destruirIrrompible() {
         imagen = null;
-        estado = Estados.INACTIVO;
     }
 
     @Override

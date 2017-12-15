@@ -15,6 +15,9 @@ import es.uniovi.balbuena.juegodianas.modelos.Cannon;
 import es.uniovi.balbuena.juegodianas.modelos.Diana;
 import es.uniovi.balbuena.juegodianas.modelos.DianaFacil;
 import es.uniovi.balbuena.juegodianas.modelos.DisparoCannon;
+import es.uniovi.balbuena.juegodianas.modelos.Obstaculo;
+import es.uniovi.balbuena.juegodianas.modelos.ObstaculoFacil;
+import es.uniovi.balbuena.juegodianas.modelos.ObstaculoIrrompible;
 import es.uniovi.balbuena.juegodianas.modelos.PowerUp;
 import es.uniovi.balbuena.juegodianas.modelos.controles.Marcador;
 import es.uniovi.balbuena.juegodianas.modelos.escenario.Fondo;
@@ -45,8 +48,12 @@ public class GameView extends View {
     private Cannon cannon;
     private Marcador marcador;
     private List<Diana> dianas;
+    private List<Obstaculo> obstaculos;
     private List<DisparoCannon> disparoCannons;
+    private List<PowerUp> powerUps;
     private boolean finJuego;
+    private boolean isPowerUpAtaque;
+    private boolean isPowerUpPuntuacion;
 
     public GameView(Context context) {
         super(context);
@@ -56,15 +63,28 @@ public class GameView extends View {
     }
 
     private void inicializar(Context context) {
+        isPowerUpAtaque = false;
+        isPowerUpPuntuacion=false;
+
 
         fondo = new Fondo (context, Ar.x(320/2), Ar.y(480/2));
         cannon = new Cannon(context,  Ar.x(320/2), Ar.y(390));
         Diana d = new DianaFacil(context, Ar.x(50), Ar.y(50));
-        marcador = new Marcador(context, Ar.x(250), Ar.y(410));
+        marcador = new Marcador(context, Ar.x(30), Ar.y(30));
+        ObstaculoFacil obstaculoFacil = new ObstaculoFacil(context, Ar.x(50), Ar.y(250));
+        ObstaculoIrrompible obstaculoIrrompible = new ObstaculoIrrompible(context, Ar.x(250), Ar.y(150));
+
 
         disparoCannons = new LinkedList<DisparoCannon>();
+
         dianas = new LinkedList<Diana>();
         dianas.add(d);
+
+        obstaculos = new LinkedList<Obstaculo>();
+        obstaculos.add(obstaculoFacil);
+        obstaculos.add(obstaculoIrrompible);
+
+        powerUps = new LinkedList<PowerUp>();
 
         // Bucle del Juego.
         gameloop = new GameLoop();
@@ -86,6 +106,10 @@ public class GameView extends View {
                     ) {
                 disparos.dibujarEnPantalla(canvas);
             }
+            for (Obstaculo obstaculo : obstaculos
+                 ) {
+                obstaculo.dibujarEnPantalla(canvas);
+            }
 
         }catch (Exception e){
 
@@ -96,6 +120,7 @@ public class GameView extends View {
         Diana dianaSacarLista = null;
         DisparoCannon disparoSacarLista = null;
         PowerUp powerUpSacarLista = null;
+        Obstaculo obstaculoSacarLista = null;
 
         for (Diana d: dianas
              ) {
@@ -111,8 +136,35 @@ public class GameView extends View {
                         && d.colisiona(disparoCannon1) && d.estado == Estados.ACTIVO) {
 
                     d.destruir();
-                    marcador.setPuntos(marcador.getPuntos() + d.getPuntuacion());
 
+                    marcador.setPuntos(marcador.getPuntos() + d.getPuntuacion());
+                    if(isPowerUpPuntuacion){ //si ha cogido un powerUp, se dobla la puntuacion
+                        marcador.setPuntos(marcador.getPuntos() + d.getPuntuacion());
+                    }
+
+                    disparoSacarLista = disparoCannon1;
+                }
+                if (disparoCannon1.estaEnPantalla() != 1) {
+                    disparoSacarLista = disparoCannon1;
+                }
+            }
+        }
+        for (Obstaculo o : obstaculos
+             ) {
+            if (o.estaEnPantalla() == -1 || o.estado == Estados.INACTIVO) {
+                obstaculoSacarLista  = o;
+            }
+
+            for (DisparoCannon disparoCannon1 : disparoCannons) {
+
+                if (o.estaEnPantalla() == 1
+                        && o.colisiona(disparoCannon1) && o.estado == Estados.ACTIVO) {
+
+                    o.destruir();
+                    if(isPowerUpAtaque){
+                        o.estado = Estados.INACTIVO;
+                        o.setImagen(null);
+                    }
                     disparoSacarLista = disparoCannon1;
                 }
                 if (disparoCannon1.estaEnPantalla() != 1) {
@@ -128,6 +180,11 @@ public class GameView extends View {
         if(disparoSacarLista != null){
             disparoCannons.remove(disparoSacarLista);
         }
+        if(obstaculoSacarLista != null){
+            obstaculos.remove(obstaculoSacarLista);
+        }
+
+
 
 
     }

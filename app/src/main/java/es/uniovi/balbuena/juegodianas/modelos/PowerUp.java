@@ -3,6 +3,8 @@ package es.uniovi.balbuena.juegodianas.modelos;
 import android.content.Context;
 import android.graphics.Canvas;
 
+import es.uniovi.balbuena.juegodianas.global.Estados;
+
 /**
  * Created by Balbuena on 08/12/2017.
  */
@@ -10,6 +12,7 @@ import android.graphics.Canvas;
 public abstract class PowerUp extends Modelo {
 
     public float aceleracionY;
+    public  int estado = Estados.ACTIVO;
 
     public PowerUp(Context context, double x, double y) {
 

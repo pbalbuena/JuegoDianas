@@ -23,6 +23,14 @@ public class Modelo {
     protected int ancho;
     protected Drawable imagen;
 
+    public Drawable getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Drawable imagen) {
+        this.imagen = imagen;
+    }
+
     public Modelo(Context context, double x, double y){
         this.context = context;
         this.x = x;

@@ -32,9 +32,10 @@ public class Marcador extends Modelo {
     @Override
     public void dibujarEnPantalla(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.BLACK);
         paint.setAntiAlias(true);
-        paint.setTextSize(20);
+        paint.setTextSize(40);
+        paint.setFakeBoldText(true);
         canvas.drawText(String.valueOf(puntos), (int)x, (int)y, paint);
     }
 }

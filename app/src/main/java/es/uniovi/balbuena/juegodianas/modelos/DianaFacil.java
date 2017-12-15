@@ -44,7 +44,7 @@ public class DianaFacil extends Diana {
                 context.getResources(), R.drawable.animacion_enemigo_explotar), ancho, altura, 6, 6, false);
         sprites.put(EXPLOTAR, explotar);
 
-        sprite = explotar;
+        sprite = basico;
 
         aceleracionX = 3;
     }
@@ -67,6 +67,8 @@ public class DianaFacil extends Diana {
         boolean finalizaSprite = sprite.actualizar(System.currentTimeMillis());
 
         if (sprite == sprites.get(EXPLOTAR) && finalizaSprite) {
+            imagen = null;
+            //sprite = sprites.get(EXPLOTAR);
             estado = Estados.INACTIVO;
         }
 
