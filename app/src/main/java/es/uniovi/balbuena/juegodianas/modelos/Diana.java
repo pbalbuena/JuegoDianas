@@ -11,6 +11,30 @@ import es.uniovi.balbuena.juegodianas.global.Estados;
 
 public abstract class Diana extends Modelo {
 
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
+    public float getAceleracionX() {
+        return aceleracionX;
+    }
+
+    public void setAceleracionX(float aceleracionX) {
+        this.aceleracionX = aceleracionX;
+    }
+
+    public float getAceleracionY() {
+        return aceleracionY;
+    }
+
+    public void setAceleracionY(float aceleracionY) {
+        this.aceleracionY = aceleracionY;
+    }
+
     private int puntuacion;
 
     public float aceleracionX;

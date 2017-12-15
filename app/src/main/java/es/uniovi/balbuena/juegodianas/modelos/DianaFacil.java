@@ -31,6 +31,9 @@ public class DianaFacil extends Diana {
         altura = Ar.altura(40);
         ancho = Ar.ancho(40);
 
+        //puntuacion
+        setPuntuacion(1);
+
         imagen = context.getResources().getDrawable(R.drawable.diana1);
 
         Sprite basico = new Sprite(BitmapFactory.decodeResource(

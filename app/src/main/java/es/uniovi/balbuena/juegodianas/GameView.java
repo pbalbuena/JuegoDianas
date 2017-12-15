@@ -10,10 +10,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import es.uniovi.balbuena.juegodianas.global.Estados;
 import es.uniovi.balbuena.juegodianas.modelos.Cannon;
 import es.uniovi.balbuena.juegodianas.modelos.Diana;
 import es.uniovi.balbuena.juegodianas.modelos.DianaFacil;
 import es.uniovi.balbuena.juegodianas.modelos.DisparoCannon;
+import es.uniovi.balbuena.juegodianas.modelos.PowerUp;
+import es.uniovi.balbuena.juegodianas.modelos.controles.Marcador;
 import es.uniovi.balbuena.juegodianas.modelos.escenario.Fondo;
 import es.uniovi.balbuena.juegodianas.modelos.utilidades.Ar;
 
@@ -40,6 +43,7 @@ public class GameView extends View {
 
     private Fondo fondo;
     private Cannon cannon;
+    private Marcador marcador;
     private List<Diana> dianas;
     private List<DisparoCannon> disparoCannons;
 
@@ -55,6 +59,7 @@ public class GameView extends View {
         fondo = new Fondo (context, Ar.x(320/2), Ar.y(480/2));
         cannon = new Cannon(context,  Ar.x(320/2), Ar.y(390));
         Diana d = new DianaFacil(context, 75, 75);
+        marcador = new Marcador(context, Ar.x(320/2 +30), Ar.y(390));
 
         disparoCannons = new LinkedList<DisparoCannon>();
         dianas = new LinkedList<Diana>();
@@ -71,6 +76,7 @@ public class GameView extends View {
         try {
             fondo.dibujarEnPantalla(canvas);
             cannon.dibujarEnPantalla(canvas);
+            marcador.dibujarEnPantalla(canvas);
             for (Diana diana : dianas
                  ) {
                 diana.dibujarEnPantalla(canvas);
@@ -86,7 +92,31 @@ public class GameView extends View {
     }
 
     private void gl_comprobarColisiones(){
+        Diana dianaSacarLista = null;
+        DisparoCannon disparoCannon = null;
+        PowerUp powerUpSacarLista = null;
 
+        for (Diana d: dianas
+             ) {
+            if (d.estaEnPantalla() == -1 || d.estado == Estados.INACTIVO) {
+                dianaSacarLista  = d;
+            }
+
+            for (DisparoCannon disparoCannon1 : disparoCannons) {
+
+                if (d.estaEnPantalla() == 1
+                        && d.colisiona(disparoCannon1) && d.estado == Estados.ACTIVO) {
+
+                    d.destruir();
+                    marcador.setPuntos(marcador.getPuntos() + d.getPuntuacion());
+
+                    disparoCannon = disparoCannon1;
+                }
+                if (disparoCannon1.estaEnPantalla() != 1) {
+                    disparoCannon = disparoCannon1;
+                }
+            }
+        }
     }
 
     private void gl_comprobarNivelFinalizado(){
@@ -194,7 +224,7 @@ public class GameView extends View {
 
 
                       gl_moverElementos();
-                  //  gl_comprobarColisiones();
+                      gl_comprobarColisiones();
 
 
                     // Re-dibujar onDraw(Canvas canvas)
