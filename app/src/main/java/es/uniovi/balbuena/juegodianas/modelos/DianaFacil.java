@@ -28,8 +28,8 @@ public class DianaFacil extends Diana {
 
     public DianaFacil(Context context, double x, double y) {
         super(context, x, y);
-        altura = Ar.altura(75);
-        ancho = Ar.ancho(75);
+        altura = Ar.altura(40);
+        ancho = Ar.ancho(40);
 
         imagen = context.getResources().getDrawable(R.drawable.diana1);
 

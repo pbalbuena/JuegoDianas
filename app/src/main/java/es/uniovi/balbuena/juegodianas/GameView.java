@@ -105,6 +105,7 @@ public class GameView extends View {
         for (DisparoCannon disparos : disparoCannons
                 ) {
             disparos.moverAutomaticamente();
+            Log.i("coord disparo x y", disparos.getX() + " " + disparos.getY());
         }
     }
 
