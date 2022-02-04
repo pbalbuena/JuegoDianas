@@ -16,3 +16,6 @@ En el juego contamos con diferentes actores para darle vida al juego:
 ## Power-ups
 - Mejora de ataque: Permite romper los obstáculos irrompibles durante un breve periodo de tiempo
 - Mejora de puntuación: Obtendrás el doble de puntuación durante un breve periodo de tiempo
+
+
+Desarrollado en 2017
